@@ -1,6 +1,8 @@
 # AI Recruitment Matching Service
 
-> **🚧 Status: Under Development** 
+> **🚧 Status: Under Development**
+
+
 An independent AI service that parses resumes and job descriptions, and
 compares them to produce a compatibility report for recruiters.
 
