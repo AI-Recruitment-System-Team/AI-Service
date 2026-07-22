@@ -1,0 +1,248 @@
+{
+  "Python": [],
+  "Java": [],
+  "JavaScript": [
+    "js"
+  ],
+  "TypeScript": [
+    "ts"
+  ],
+  "C++": [
+    "cpp"
+  ],
+  "C#": [
+    "c sharp",
+    "csharp"
+  ],
+  "C": [],
+  "Go": [
+    "golang"
+  ],
+  "Rust": [],
+  "Ruby": [],
+  "PHP": [],
+  "Swift": [],
+  "Kotlin": [],
+  "Scala": [],
+  "R": [],
+  "MATLAB": [],
+  "Perl": [],
+  "Dart": [],
+  "Objective-C": [],
+  "SQL": [],
+  "Bash": [
+    "shell scripting",
+    "shell"
+  ],
+  "PowerShell": [],
+  "VBA": [],
+  "Assembly": [],
+  "HTML": [
+    "html5"
+  ],
+  "CSS": [
+    "css3"
+  ],
+  "Sass": [
+    "scss"
+  ],
+  "Tailwind CSS": [
+    "tailwind"
+  ],
+  "Bootstrap": [],
+  "React": [
+    "react.js",
+    "reactjs"
+  ],
+  "Redux": [],
+  "Vue.js": [
+    "vue",
+    "vuejs"
+  ],
+  "Angular": [
+    "angularjs"
+  ],
+  "Next.js": [
+    "nextjs"
+  ],
+  "Svelte": [],
+  "jQuery": [],
+  "Web Development": [],
+  "Webpack": [],
+  "Vite": [],
+  "Node.js": [
+    "node",
+    "nodejs"
+  ],
+  "Express.js": [
+    "express"
+  ],
+  "Django": [],
+  "Flask": [],
+  "FastAPI": [],
+  "Spring Boot": [
+    "spring"
+  ],
+  "ASP.NET": [
+    "asp.net core",
+    ".net",
+    "dotnet"
+  ],
+  "Laravel": [],
+  "Ruby on Rails": [
+    "rails"
+  ],
+  "NestJS": [],
+  "GraphQL": [],
+  "REST API": [
+    "restful api",
+    "rest apis",
+    "restful",
+    "rest"
+  ],
+  "gRPC": [],
+  "Microservices": [],
+  "Android Development": [
+    "android"
+  ],
+  "iOS Development": [
+    "ios"
+  ],
+  "Flutter": [],
+  "React Native": [],
+  "Xamarin": [],
+  "SQL Server": [
+    "ms sql",
+    "mssql"
+  ],
+  "MySQL": [],
+  "PostgreSQL": [
+    "postgres"
+  ],
+  "SQLite": [],
+  "MongoDB": [
+    "mongo"
+  ],
+  "Redis": [],
+  "Cassandra": [],
+  "Oracle Database": [
+    "oracle db",
+    "oracle"
+  ],
+  "Firebase": [],
+  "DynamoDB": [],
+  "Elasticsearch": [],
+  "NoSQL": [],
+  "AWS": [
+    "amazon web services"
+  ],
+  "Azure": [
+    "microsoft azure"
+  ],
+  "Google Cloud Platform": [
+    "gcp",
+    "google cloud"
+  ],
+  "Docker": [],
+  "Kubernetes": [
+    "k8s"
+  ],
+  "Terraform": [],
+  "Jenkins": [],
+  "CI/CD": [
+    "ci cd",
+    "continuous integration",
+    "continuous deployment"
+  ],
+  "Ansible": [],
+  "Linux": [],
+  "Nginx": [],
+  "Apache": [],
+  "Git": [],
+  "GitHub": [],
+  "GitLab": [],
+  "Bitbucket": [],
+  "Machine Learning": [
+    "ml"
+  ],
+  "Deep Learning": [
+    "dl"
+  ],
+  "Artificial Intelligence": [
+    "ai"
+  ],
+  "Computer Vision": [
+    "cv"
+  ],
+  "Natural Language Processing": [
+    "nlp"
+  ],
+  "Data Analysis": [],
+  "Data Science": [],
+  "Data Engineering": [],
+  "Data Visualization": [],
+  "Big Data": [],
+  "TensorFlow": [],
+  "PyTorch": [],
+  "Keras": [],
+  "Scikit-learn": [
+    "sklearn"
+  ],
+  "Pandas": [],
+  "NumPy": [],
+  "OpenCV": [],
+  "Hugging Face": [],
+  "LLM": [
+    "large language models"
+  ],
+  "Power BI": [
+    "powerbi"
+  ],
+  "Tableau": [],
+  "Excel": [
+    "microsoft excel"
+  ],
+  "Apache Spark": [
+    "spark"
+  ],
+  "Hadoop": [],
+  "ETL": [],
+  "Unit Testing": [],
+  "Selenium": [],
+  "Jest": [],
+  "Pytest": [],
+  "Cypress": [],
+  "JUnit": [],
+  "QA Testing": [
+    "quality assurance",
+    "manual testing"
+  ],
+  "Automation Testing": [],
+  "Jira": [],
+  "Confluence": [],
+  "Trello": [],
+  "Agile": [],
+  "Scrum": [],
+  "Kanban": [],
+  "Figma": [],
+  "Adobe XD": [],
+  "Photoshop": [],
+  "UI/UX Design": [
+    "ui ux",
+    "ux design",
+    "ui design"
+  ],
+  "API Development": [],
+  "System Design": [],
+  "Object-Oriented Programming": [
+    "oop"
+  ],
+  "Blockchain": [],
+  "Cybersecurity": [],
+  "IoT": [
+    "internet of things"
+  ],
+  "Embedded Systems": [],
+  "Robotics": [],
+  "Networking": []
+}

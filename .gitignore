@@ -1,10 +1,32 @@
-# Virtual Environment
+# Virtual environment
 venv/
+env/
+.venv/
+
+# Python cache
 __pycache__/
 *.pyc
+*.pyo
+
+# Environment variables / secrets
 .env
+*.env
+
+# IDE / editor settings
 .vscode/
 .idea/
-data/
-outputs/
+*.swp
 
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Parsed/output data and uploaded resumes (may contain personal information)
+data/
+*.tmp
+
+# Downloaded embedding models (sentence-transformers cache, if stored locally)
+.cache/
