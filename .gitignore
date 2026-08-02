@@ -23,10 +23,10 @@ Thumbs.db
 
 # Logs
 *.log
+*.tmp
 
 # Parsed/output data and uploaded resumes (may contain personal information)
 data/
-*.tmp
 
-# Downloaded embedding models (sentence-transformers cache, if stored locally)
+# Downloaded model caches (sentence-transformers, GLiNER, HuggingFace)
 .cache/

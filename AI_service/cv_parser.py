@@ -1,5 +1,5 @@
 from pdf_reader import extract_text_from_pdf
-from Contact_extractor import extract_contact
+from Contact_extractor import extract_contact, extract_stated_years_of_experience
 from AI_extractor import extract_resume_data
 import json
 
@@ -11,6 +11,7 @@ def parse_cv_from_text(cv_text):
     """
     contact_info = extract_contact(cv_text)
     ai_data = extract_resume_data(cv_text)
+    stated_years = extract_stated_years_of_experience(cv_text)
 
     return {
         "personal_info": contact_info,
@@ -20,7 +21,8 @@ def parse_cv_from_text(cv_text):
         "projects": ai_data.get("projects", []),
         "languages": ai_data.get("languages", []),
         "courses": ai_data.get("courses", []),
-        "activities": ai_data.get("activities", [])
+        "activities": ai_data.get("activities", []),
+        "stated_years_of_experience": stated_years
     }
 
 

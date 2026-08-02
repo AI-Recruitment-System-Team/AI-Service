@@ -26,6 +26,23 @@ class MatchTextRequest(BaseModel):
     job_description_text: str
 
 
+def _trim_to_spec(full_result):
+    """
+    match_candidate_to_job() computes extra internal detail (score
+    breakdown, years of experience) useful during development/testing.
+    The public API response is trimmed down to exactly the 5 fields from
+    the original requirements: match_score, matched_skills, missing_skills,
+    candidate_summary, recommendations.
+    """
+    return {
+        "match_score": full_result["match_score"],
+        "matched_skills": full_result["matched_skills"],
+        "missing_skills": full_result["missing_skills"],
+        "candidate_summary": full_result["candidate_summary"],
+        "recommendations": full_result["recommendations"]
+    }
+
+
 # =====================================================================
 # Endpoint 1: both resume and job description as plain text
 # (use this when the recruiter/candidate already has typed/pasted text)
@@ -35,17 +52,13 @@ class MatchTextRequest(BaseModel):
 async def match_from_text(payload: MatchTextRequest):
     """
     Input:  { "resume_text": "...", "job_description_text": "..." }
-    Output: full match report (score, matched/missing skills, summary, recommendations)
+    Output: { match_score, matched_skills, missing_skills, candidate_summary, recommendations }
     """
     cv_data = parse_cv_from_text(payload.resume_text)
     jd_data = extract_jd_data(payload.job_description_text)
     result = match_candidate_to_job(cv_data, jd_data)
 
-    return {
-        "match_result": result,
-        "parsed_resume": cv_data,
-        "parsed_job_description": jd_data
-    }
+    return _trim_to_spec(result)
 
 
 # =====================================================================
@@ -78,11 +91,7 @@ async def match_from_pdf(
     jd_data = extract_jd_data(job_description_text)
     result = match_candidate_to_job(cv_data, jd_data)
 
-    return {
-        "match_result": result,
-        "parsed_resume": cv_data,
-        "parsed_job_description": jd_data
-    }
+    return _trim_to_spec(result)
 
 
 # =====================================================================

@@ -1,6 +1,6 @@
 import os
 import json
-from AI_service.cv_parser import parse_cv
+from cv_parser import parse_cv
 
 RESUMES_FOLDER = r"E:\ai-recruitment\data\resumes"
 OUTPUT_FOLDER = r"E:\ai-recruitment\data\parsed_resumes"

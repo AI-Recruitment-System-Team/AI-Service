@@ -35,6 +35,11 @@ values only from the actual job description text provided below. If a field is n
 in the actual text, return "" or [] for it — do NOT reuse any example value.
 
 Rules:
+- company: only extract an ACTUAL company/organization name if one is explicitly named (e.g. "XYZ
+  Corp is hiring..."). Do NOT extract pronouns or generic phrases like "We", "Our team", "I" as a
+  company name just because the JD starts with "We're looking for..." or similar casual phrasing.
+  If no specific company name is given anywhere in the text, return "" - a vague opening like
+  "We're hiring" does NOT count as a company name.
 - required_skills / nice_to_have_skills: each entry must be a SHORT atomic skill/tool/technology
   name only (e.g. "Python", "PostgreSQL", "Docker") — NEVER a full sentence or a requirement
   description. If a line mentions multiple skills together (e.g. "SQL databases (PostgreSQL
@@ -48,6 +53,10 @@ Rules:
   Same atomic-term rule applies (e.g. "Docker", "AWS", not "Experience with Docker and AWS").
   If the JD doesn't distinguish between required and optional skills, put everything under
   required_skills and leave nice_to_have_skills as [].
+- languages_required: this means HUMAN/SPOKEN languages only (e.g. "English", "Arabic", "French",
+  "Mandarin"). NEVER put programming languages, frameworks, or technical skills here (e.g. "C#",
+  "SQL", "JavaScript" are technical skills and belong in required_skills, NOT languages_required).
+  If no spoken language requirement is explicitly mentioned, return an empty array [].
 - years_of_experience: extract exactly as stated (e.g. "3+ years", "2-4 years", "entry-level").
   If not mentioned, use "".
 - seniority_level: infer only from explicit wording (e.g. "Senior", "Junior", "Entry-level",
@@ -113,7 +122,7 @@ def extract_jd_data(jd_text, max_retries=3):
     for attempt in range(max_retries):
         try:
             response = ollama.chat(
-                model="qwen2.5:1.5b",
+                model="qwen2.5:3b",
                 messages=[{"role": "user", "content": prompt}],
                 format="json",
                 options={"temperature": 0, "num_predict": 1000}
@@ -213,9 +222,17 @@ def _post_process(data):
             return ""
         return str(value).strip()
 
+    _INVALID_COMPANY_VALUES = {"we", "our", "our team", "us", "i", "you", "they", "the company"}
+
+    def as_company(value):
+        cleaned = as_str(value)
+        if cleaned.lower() in _INVALID_COMPANY_VALUES:
+            return ""
+        return cleaned
+
     return {
         "job_title": as_str(data.get("job_title")),
-        "company": as_str(data.get("company")),
+        "company": as_company(data.get("company")),
         "location": as_str(data.get("location")),
         "employment_type": as_str(data.get("employment_type")),
         "seniority_level": as_str(data.get("seniority_level")),

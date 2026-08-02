@@ -131,7 +131,9 @@ def _parse_candidate_years(experience_entries):
         duration = entry.get("duration", "") or ""
         years = [int(y) for y in re.findall(r"\b(?:19|20)\d{2}\b", duration)]
 
-        if "present" in duration.lower() and years:
+        is_ongoing = any(word in duration.lower() for word in ["present", "current", "since", "now", "ongoing"])
+
+        if is_ongoing and years:
             total_years += max(0, current_year - years[0])
         elif len(years) >= 2:
             total_years += max(0, years[-1] - years[0])
@@ -144,6 +146,15 @@ def _parse_candidate_years(experience_entries):
 def _score_experience(cv_data, jd_data):
     required_years = _parse_required_years(jd_data.get("years_of_experience", ""))
     candidate_years = _parse_candidate_years(cv_data.get("experience", []))
+
+    # fallback: if we couldn't compute any years from job dates (e.g. no
+    # dates were extractable at all), fall back to an explicitly stated
+    # "X years of experience" phrase from the resume, if one was found
+    # during parsing. Actual job dates are always preferred when available.
+    if candidate_years == 0:
+        stated_years = cv_data.get("stated_years_of_experience")
+        if stated_years:
+            candidate_years = stated_years
 
     if required_years == 0:
         return 1.0, candidate_years, required_years
@@ -297,7 +308,7 @@ headings, no markdown, no extra commentary.
 """
 
         response = ollama.chat(
-            model="qwen2.5:1.5b",
+            model="qwen2.5:3b",
             messages=[{"role": "user", "content": prompt}],
             options={"temperature": 0.3, "num_predict": 150}
         )

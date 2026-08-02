@@ -191,7 +191,9 @@
   "Pandas": [],
   "NumPy": [],
   "OpenCV": [],
-  "Hugging Face": [],
+  "Hugging Face": [
+    "huggingface"
+  ],
   "LLM": [
     "large language models"
   ],
@@ -200,7 +202,8 @@
   ],
   "Tableau": [],
   "Excel": [
-    "microsoft excel"
+    "microsoft excel",
+    "ms excel"
   ],
   "Apache Spark": [
     "spark"
@@ -244,5 +247,211 @@
   ],
   "Embedded Systems": [],
   "Robotics": [],
-  "Networking": []
+  "Networking": [],
+  "MLOps": [
+    "ml ops"
+  ],
+  "WandB": [
+    "weights and biases",
+    "weights & biases"
+  ],
+  "Vast.ai": [],
+  "LangChain": [],
+  "LangGraph": [],
+  "LlamaIndex": [],
+  "CrewAI": [],
+  "RAG": [
+    "retrieval augmented generation",
+    "rag pipeline",
+    "rag pipelines"
+  ],
+  "Vector Database": [
+    "vector databases",
+    "vector store",
+    "vector stores"
+  ],
+  "FAISS": [],
+  "ChromaDB": [
+    "chroma"
+  ],
+  "Weaviate": [],
+  "Streamlit": [],
+  "LoRA": [
+    "low-rank adaptation"
+  ],
+  "PEFT": [
+    "parameter-efficient fine-tuning"
+  ],
+  "vLLM": [],
+  "JWT": [
+    "json web token",
+    "jwt authentication"
+  ],
+  "Prompt Engineering": [],
+  "Knowledge Distillation": [],
+  "Fine-Tuning": [
+    "fine tuning",
+    "model fine-tuning"
+  ],
+  "AI Agents": [
+    "agentic ai",
+    "autonomous agents",
+    "ai agent"
+  ],
+  "Groq": [],
+  "OpenRouter": [],
+  "Anthropic": [
+    "claude api"
+  ],
+  "OpenAI": [
+    "openai api"
+  ],
+  "T-SQL": [
+    "tsql"
+  ],
+  "ASMX": [],
+  "WCF": [
+    "windows communication foundation"
+  ],
+  "LINQ": [],
+  "Entity Framework": [
+    "ef",
+    "entity framework core"
+  ],
+  "MVC": [
+    "model view controller",
+    "asp.net mvc"
+  ],
+  "SAP": [
+    "advanced sap"
+  ],
+  "jQuery UI": [
+    "jquery-ui"
+  ],
+  "O/RM": [
+    "orm",
+    "object relational mapping"
+  ],
+  "Visual Studio": [],
+  "Team Foundation Server": [
+    "tfs"
+  ],
+  "Enterprise Library": [],
+  "Lambda Expressions": [
+    "lambda expression"
+  ],
+  "Google Ads": [
+    "google adwords",
+    "adwords"
+  ],
+  "Meta Ads": [
+    "facebook ads",
+    "meta ads manager",
+    "facebook ads manager"
+  ],
+  "LinkedIn Ads": [],
+  "TikTok Ads": [],
+  "Google Analytics": [
+    "ga4",
+    "google analytics 4"
+  ],
+  "SEO": [
+    "search engine optimization"
+  ],
+  "SEM": [
+    "search engine marketing"
+  ],
+  "PPC": [
+    "pay per click",
+    "paid search"
+  ],
+  "SEMrush": [],
+  "Ahrefs": [],
+  "HubSpot": [],
+  "Mailchimp": [],
+  "Hootsuite": [],
+  "Canva": [],
+  "Content Marketing": [],
+  "Email Marketing": [],
+  "Social Media Marketing": [
+    "social media management"
+  ],
+  "Influencer Marketing": [
+    "influencer outreach"
+  ],
+  "Digital Marketing": [],
+  "Growth Marketing": [],
+  "Performance Marketing": [],
+  "Copywriting": [],
+  "Brand Strategy": [
+    "branding"
+  ],
+  "Marketing Automation": [],
+  "CRM": [
+    "customer relationship management"
+  ],
+  "Salesforce": [],
+  "A/B Testing": [
+    "ab testing",
+    "split testing"
+  ],
+  "Conversion Rate Optimization": [
+    "cro"
+  ],
+  "Google Tag Manager": [
+    "gtm"
+  ],
+  "Adobe Creative Suite": [
+    "adobe photoshop",
+    "photoshop",
+    "adobe illustrator",
+    "illustrator"
+  ],
+  "PowerPoint": [
+    "microsoft powerpoint",
+    "ms powerpoint"
+  ],
+  "Market Research": [],
+  "Public Relations": [
+    "pr"
+  ],
+  "Event Management": [
+    "event planning"
+  ],
+  "Budget Management": [
+    "budget planning"
+  ],
+  "Team Leadership": [
+    "team management",
+    "leadership experience"
+  ],
+  "Project Management": [],
+  "VGGish": [],
+  "OpenL3": [],
+  "YAMNet": [],
+  "wav2vec2": [
+    "wav2vec 2.0"
+  ],
+  "TFLite": [
+    "tensorflow lite"
+  ],
+  "Conv1D": [
+    "1d convolution"
+  ],
+  "CNN": [
+    "convolutional neural network",
+    "convolutional neural networks"
+  ],
+  "DNN": [
+    "deep neural network",
+    "deep neural networks"
+  ],
+  "Firestore": [],
+  "On-Device Inference": [
+    "edge inference",
+    "edge deployment"
+  ],
+  "Edge AI": [],
+  "Pinecone": [],
+  "AutoGen": []
 }

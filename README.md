@@ -1,6 +1,7 @@
 # AI Recruitment Matching Service
 
-> **🚧 Status: Under Development** 
+> **Status: MVP**
+
 An independent AI service that parses resumes and job descriptions, and
 compares them to produce a compatibility report for recruiters.
 
@@ -14,18 +15,19 @@ compares them to produce a compatibility report for recruiters.
   job description and returns:
   - an overall match score (0–100%) with a breakdown by category
   - matched skills / missing skills
-  - an AI-generated candidate summary
+  - an AI-generated candidate summary (strengths-only from the model;
+    gaps are always computed deterministically, never invented by the AI)
   - recommendations for the recruiter
 
 ## Prerequisites
 
 1. **Python 3.10+**
 2. **[Ollama](https://ollama.com)** installed and running locally, with the
-   `qwen2.5:1.5b` model pulled:
+   `qwen2.5:3b` model pulled:
    ```bash
-   ollama pull qwen2.5:1.5b
+   ollama pull qwen2.5:3b
    ```
-3. Python packages (see below)
+3. Python packages (see `requirements.txt`)
 
 ## Setup
 
@@ -38,6 +40,11 @@ venv\Scripts\Activate.ps1      # Windows PowerShell
 # install dependencies
 pip install -r requirements.txt
 ```
+
+First run will also download the `all-MiniLM-L6-v2` embedding model
+(used for semantic matching and section detection) and, if `gliner` is
+installed, a GLiNER model - both require internet access once, then work
+offline from a local cache.
 
 ## Running the service
 
@@ -77,43 +84,56 @@ Simple health check, returns `{"status": "ok"}`.
 ### Example response (both endpoints)
 ```json
 {
-  "match_result": {
-    "match_score": 83.6,
-    "score_breakdown": {
-      "skills": 87.5,
-      "experience": 100.0,
-      "education": 83.4,
-      "semantic_overall": 49.2
-    },
-    "matched_skills": ["Python", "Machine Learning", "..."],
-    "missing_skills": ["Docker"],
-    "candidate_years_of_experience": 2,
-    "required_years_of_experience": 2,
-    "candidate_summary": "...",
-    "recommendations": ["..."]
-  },
-  "parsed_resume": { "...": "full structured CV data" },
-  "parsed_job_description": { "...": "full structured JD data" }
+  "match_score": 71.8,
+  "matched_skills": ["Python", "Google Ads", "..."],
+  "missing_skills": ["Docker"],
+  "candidate_summary": "...",
+  "recommendations": ["..."]
 }
 ```
 
 ## Project structure
 
+Everything lives in one flat folder so every file can simply
+`import` from any other, with no path configuration needed:
+
 ```
 ai_service/
-├── main.py                 # FastAPI app - the entry point / API
-├── pdf_reader.py            # PDF -> text extraction (PyMuPDF)
-├── contact_extractor.py     # regex-based contact info extraction (CV)
-├── ai_extractor.py          # AI-based CV field extraction (skills, education...)
-├── cv_parser.py             # combines the above into one structured CV
-├── batch_processor.py       # CLI tool: parse every resume in a folder
-├── jd_extractor.py          # AI-based job description extraction
-├── skills_matcher.py        # keyword-based skill matcher (safety net for the AI)
-├── skills_taxonomy.json     # editable list of known skills/aliases
-├── matching_engine.py       # scores a CV against a JD (skills/experience/education/semantic)
-├── weights_config.json      # editable scoring weights
+├── main.py                  # FastAPI app - the entry point / API
+├── pdf_reader.py             # PDF -> text extraction (PyMuPDF)
+├── contact_extractor.py      # regex-based contact info + stated years-of-experience
+├── ai_extractor.py           # AI-based CV field extraction (skills, education, experience...)
+├── cv_parser.py               # combines the above into one structured CV
+├── batch_processor.py         # CLI tool: parse every resume in a folder
+├── jd_extractor.py            # AI-based job description extraction
+├── skills_matcher.py          # keyword-based skill matcher (safety net for the AI)
+├── skills_taxonomy.json       # editable list of known skills/aliases (~225 entries)
+├── matching_engine.py          # scores a CV against a JD (skills/experience/education/semantic)
+├── weights_config.json         # editable scoring weights
 └── requirements.txt
 ```
+
+## How extraction works (three layers, not one)
+
+Relying on a single small local LLM (`qwen2.5:3b`) for everything proved
+unreliable on its own, so extraction is layered:
+
+1. **Fixed taxonomy** (`skills_matcher.py` + `skills_taxonomy.json`) —
+   100% reliable for any skill already in the list, regardless of where
+   it appears in the text (not limited to a "Skills:" section).
+2. **The LLM** (`qwen2.5:3b`) — handles everything that needs contextual
+   understanding: which lines are jobs vs. projects, what counts as an
+   activity vs. a course, etc.
+3. **GLiNER** *(optional)* — a specialized zero-shot entity-extraction
+   model, used as a third pass over skills specifically. If it isn't
+   installed, this layer is silently skipped and the other two still work.
+
+Section boundaries (where "Experience" ends and "Projects" begins, etc.)
+are found the same layered way: an exact-match list of common header
+phrasings first (fast), falling back to embedding-based *semantic*
+matching for header phrasing never seen before (e.g. "My Journey"
+instead of "Experience") - so a novel resume format doesn't silently
+break extraction.
 
 ## Configuration
 
@@ -122,11 +142,38 @@ ai_service/
 - **`weights_config.json`** — adjust how much each factor (skills,
   experience, education, semantic fit) contributes to the final match score.
 
+## Known Limitations
+
+This is a local-LLM-based system, not a guarantee of perfect extraction.
+Tested across multiple domains (tech, marketing, data analytics) and
+resume formats, with these known gaps:
+
+- **Table-formatted resumes** are not specifically handled — text
+  extracted from PDF tables can come out jumbled, since `pdf_reader.py`
+  extracts plain text without layout/column awareness.
+- **Mixed-language resumes** (Arabic/English interleaved in the same
+  sentence) haven't been tested and may reduce extraction accuracy.
+- **GPA is not currently extracted** - no field for it exists in the schema.
+- The `skills_taxonomy.json` list, while broad, is not exhaustive — a
+  brand-new or highly niche skill name may only be caught by the LLM or
+  GLiNER layers, not guaranteed by the fixed list.
+- Years-of-experience is calculated from actual job dates when available
+  (falls back to an explicitly stated "X years of experience" phrase only
+  if no dates could be parsed at all) - a resume with neither will score
+  0 years, which may unfairly affect candidates whose experience just
+  wasn't in a recognizable date format.
+- This service should be treated as **a starting point for a recruiter
+  to review, not a final automated decision** - a human-review step
+  before any hiring decision is strongly recommended.
+
 ## Notes for the backend team
 
 - This service is stateless — it doesn't store any data. The backend is
   responsible for persisting parsed resumes, job postings, and match
   results.
-- Requires Ollama running locally (or reachable) with `qwen2.5:1.5b`
+- Requires Ollama running locally (or reachable) with `qwen2.5:3b`
   available, plus internet access on first run to download the
-  `sentence-transformers` embedding model (cached locally afterward).
+  embedding model(s) (cached locally afterward).
+- Each `/match` call takes roughly 15–30 seconds due to multiple model
+  calls involved - not suitable for a synchronous request the user waits
+  on live; consider a background job / polling pattern for production use.
