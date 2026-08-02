@@ -13,7 +13,7 @@ app = FastAPI(
     title="AI Recruitment Matching Service",
     description="Independent AI service: parses resumes and job descriptions, "
                 "and returns a candidate-job compatibility report.",
-    version="1.0.0"
+    version="0.1.0"
 )
 
 
