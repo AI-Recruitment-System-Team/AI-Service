@@ -166,10 +166,7 @@ resume formats, with these known gaps:
   to review, not a final automated decision** - a human-review step
   before any hiring decision is strongly recommended.
 
-## Notes for the backend team
 
-- This service is stateless — it doesn't store any data. The backend is
-  responsible for persisting parsed resumes, job postings, and match
   results.
 - Requires Ollama running locally (or reachable) with `qwen2.5:3b`
   available, plus internet access on first run to download the
